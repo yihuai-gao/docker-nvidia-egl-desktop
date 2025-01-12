@@ -319,139 +319,143 @@ RUN cd /tmp && VIRTUALGL_VERSION="$(curl -fsSL "https://api.github.com/repos/Vir
 
 # Anything below this line should always be kept the same between docker-nvidia-glx-desktop and docker-nvidia-egl-desktop
 
+
 # # Install KDE and other GUI packages
 # RUN mkdir -pm755 /etc/apt/preferences.d && echo "Package: firefox*\n\
-# Pin: version 1:1snap*\n\
-# Pin-Priority: -1" > /etc/apt/preferences.d/firefox-nosnap && \
+#     Pin: version 1:1snap*\n\
+#     Pin-Priority: -1" > /etc/apt/preferences.d/firefox-nosnap && \
 #     mkdir -pm755 /etc/apt/trusted.gpg.d && curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x738BEB9321D1AAEC13EA9391AEBDF4819BE21867" | gpg --dearmor -o /etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg && \
-#     mkdir -pm755 /etc/apt/sources.list.d && echo "deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu $(grep '^VERSION_CODENAME=' /etc/os-release | cut -d= -f2 | tr -d '\"') main" > "/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$(grep '^VERSION_CODENAME=' /etc/os-release | cut -d= -f2 | tr -d '\"').list" && \
-#     apt-get update && apt-get install --no-install-recommends -y \
-#         kde-baseapps \
-#         plasma-desktop \
-#         plasma-workspace \
-#         adwaita-icon-theme-full \
-#         appmenu-gtk3-module \
-#         ark \
-#         aspell \
-#         aspell-en \
-#         breeze \
-#         breeze-cursor-theme \
-#         breeze-gtk-theme \
-#         breeze-icon-theme \
-#         dbus-x11 \
-#         debconf-kde-helper \
-#         desktop-file-utils \
-#         dolphin \
-#         dolphin-plugins \
-#         enchant-2 \
-#         fcitx \
-#         fcitx-frontend-gtk2 \
-#         fcitx-frontend-gtk3 \
-#         fcitx-frontend-qt5 \
-#         fcitx-module-dbus \
-#         fcitx-module-kimpanel \
-#         fcitx-module-lua \
-#         fcitx-module-x11 \
-#         fcitx-tools \
-#         fcitx-hangul \
-#         fcitx-libpinyin \
-#         fcitx-m17n \
-#         fcitx-mozc \
-#         fcitx-sayura \
-#         fcitx-unikey \
-#         filelight \
-#         frameworkintegration \
-#         gwenview \
-#         haveged \
-#         hunspell \
-#         im-config \
-#         kwrite \
-#         kcalc \
-#         kcharselect \
-#         kdeadmin \
-#         kde-config-fcitx \
-#         kde-config-gtk-style \
-#         kde-config-gtk-style-preview \
-#         kdeconnect \
-#         kdegraphics-thumbnailers \
-#         kde-spectacle \
-#         kdf \
-#         kdialog \
-#         kfind \
-#         kget \
-#         khotkeys \
-#         kimageformat-plugins \
-#         kinfocenter \
-#         kio \
-#         kio-extras \
-#         kmag \
-#         kmenuedit \
-#         kmix \
-#         kmousetool \
-#         kmouth \
-#         ksshaskpass \
-#         ktimer \
-#         kwin-addons \
-#         kwin-x11 \
-#         libdbusmenu-glib4 \
-#         libdbusmenu-gtk3-4 \
-#         libgail-common \
-#         libgdk-pixbuf2.0-bin \
-#         libgtk2.0-bin \
-#         libgtk-3-bin \
-#         libkf5baloowidgets-bin \
-#         libkf5dbusaddons-bin \
-#         libkf5iconthemes-bin \
-#         libkf5kdelibs4support5-bin \
-#         libkf5khtml-bin \
-#         libkf5parts-plugins \
-#         libqt5multimedia5-plugins \
-#         librsvg2-common \
-#         media-player-info \
-#         okular \
-#         okular-extra-backends \
-#         plasma-browser-integration \
-#         plasma-calendar-addons \
-#         plasma-dataengines-addons \
-#         plasma-discover \
-#         plasma-integration \
-#         plasma-runners-addons \
-#         plasma-widgets-addons \
-#         print-manager \
-#         qapt-deb-installer \
-#         qml-module-org-kde-runnermodel \
-#         qml-module-org-kde-qqc2desktopstyle \
-#         qml-module-qtgraphicaleffects \
-#         qml-module-qt-labs-platform \
-#         qml-module-qtquick-xmllistmodel \
-#         qt5-gtk-platformtheme \
-#         qt5-image-formats-plugins \
-#         qt5-style-plugins \
-#         qtspeech5-flite-plugin \
-#         qtvirtualkeyboard-plugin \
-#         software-properties-qt \
-#         sonnet-plugins \
-#         sweeper \
-#         systemsettings \
-#         ubuntu-drivers-common \
-#         vlc \
-#         vlc-plugin-access-extra \
-#         vlc-plugin-notify \
-#         vlc-plugin-samba \
-#         vlc-plugin-skins2 \
-#         vlc-plugin-video-splitter \
-#         vlc-plugin-visualization \
-#         xdg-user-dirs \
-#         xdg-utils \
-#         firefox \
-#         transmission-qt && \
+#     mkdir -pm755 /etc/apt/sources.list.d && echo "deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu $(grep '^VERSION_CODENAME=' /etc/os-release | cut -d= -f2 | tr -d '\"') main" > "/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$(grep '^VERSION_CODENAME=' /etc/os-release | cut -d= -f2 | tr -d '\"').list"
+
+
+# WORKDIR /home/${USERNAME}
+RUN chmod a+x . && sudo apt-get update && sudo apt-get install --no-install-recommends -y \
+    kde-baseapps \
+    plasma-desktop \
+    plasma-workspace \
+    adwaita-icon-theme-full \
+    appmenu-gtk3-module \
+    ark \
+    aspell \
+    aspell-en \
+    breeze \
+    breeze-cursor-theme \
+    breeze-gtk-theme \
+    breeze-icon-theme \
+    dbus-x11 \
+    debconf-kde-helper \
+    desktop-file-utils \
+    dolphin \
+    dolphin-plugins \
+    enchant-2 \
+    fcitx \
+    fcitx-frontend-gtk2 \
+    fcitx-frontend-gtk3 \
+    fcitx-frontend-qt5 \
+    fcitx-module-dbus \
+    fcitx-module-kimpanel \
+    fcitx-module-lua \
+    fcitx-module-x11 \
+    fcitx-tools \
+    fcitx-hangul \
+    fcitx-libpinyin \
+    fcitx-m17n \
+    fcitx-mozc \
+    fcitx-sayura \
+    fcitx-unikey \
+    filelight \
+    frameworkintegration \
+    gwenview \
+    haveged \
+    hunspell \
+    im-config \
+    kwrite \
+    kcalc \
+    kcharselect \
+    kdeadmin \
+    kde-config-fcitx \
+    kde-config-gtk-style \
+    kde-config-gtk-style-preview \
+    kdeconnect \
+    kdegraphics-thumbnailers \
+    kde-spectacle \
+    kdf \
+    kdialog \
+    kfind \
+    kget \
+    khotkeys \
+    kimageformat-plugins \
+    kinfocenter \
+    kio \
+    # kio-extras \
+    # kmag \
+    # kmenuedit \
+    # kmix \
+    # kmousetool \
+    # kmouth \
+    # ksshaskpass \
+    # ktimer \
+    # kwin-addons \
+    # kwin-x11 \
+    # libdbusmenu-glib4 \
+    # libdbusmenu-gtk3-4 \
+    # libgail-common \
+    # libgdk-pixbuf2.0-bin \
+    # libgtk2.0-bin \
+    # libgtk-3-bin \
+    # libkf5baloowidgets-bin \
+    # libkf5dbusaddons-bin \
+    # libkf5iconthemes-bin \
+    # libkf5kdelibs4support5-bin \
+    # libkf5khtml-bin \
+    # libkf5parts-plugins \
+    # libqt5multimedia5-plugins \
+    # librsvg2-common \
+    # media-player-info \
+    # okular \
+    # okular-extra-backends \
+    # plasma-browser-integration \
+    # plasma-calendar-addons \
+    # plasma-dataengines-addons \
+    # plasma-discover \
+    # plasma-integration \
+    # plasma-runners-addons \
+    # plasma-widgets-addons \
+    # print-manager \
+    # qapt-deb-installer \
+    # qml-module-org-kde-runnermodel \
+    # qml-module-org-kde-qqc2desktopstyle \
+    # qml-module-qtgraphicaleffects \
+    # qml-module-qt-labs-platform \
+    # qml-module-qtquick-xmllistmodel \
+    # qt5-gtk-platformtheme \
+    # qt5-image-formats-plugins \
+    # qt5-style-plugins \
+    # qtspeech5-flite-plugin \
+    # qtvirtualkeyboard-plugin \
+    # software-properties-qt \
+    # sonnet-plugins \
+    # sweeper \
+    # systemsettings \
+    # ubuntu-drivers-common \
+    # vlc \
+    # vlc-plugin-access-extra \
+    # vlc-plugin-notify \
+    # vlc-plugin-samba \
+    # vlc-plugin-skins2 \
+    # vlc-plugin-video-splitter \
+    # vlc-plugin-visualization \
+    # xdg-user-dirs \
+    # xdg-utils \
+    # firefox \
+    # transmission-qt && \
 #     apt-get install --install-recommends -y \
-#         libreoffice \
-#         libreoffice-kf5 \
-#         libreoffice-plasma \
-#         libreoffice-style-breeze && \
-#     # Ensure Firefox as the default web browser
-#     xdg-settings set default-web-browser firefox.desktop && \
+#     libreoffice \
+#     libreoffice-kf5 \
+#     libreoffice-plasma \
+#     libreoffice-style-breeze
+# # Ensure Firefox as the default web browser
+# RUN xdg-settings set default-web-browser firefox.desktop && \
 #     update-alternatives --set x-www-browser /usr/bin/firefox && \
 #     # Install Google Chrome for supported architectures
 #     if [ "$(dpkg --print-architecture)" = "amd64" ]; then cd /tmp && curl -o google-chrome-stable.deb -fsSL "https://dl.google.com/linux/direct/google-chrome-stable_current_$(dpkg --print-architecture).deb" && apt-get update && apt-get install --no-install-recommends -y ./google-chrome-stable.deb && rm -f google-chrome-stable.deb && sed -i '/^Exec=/ s/$/ --password-store=basic --in-process-gpu/' /usr/share/applications/google-chrome.desktop; fi && \
@@ -464,19 +468,19 @@ RUN cd /tmp && VIRTUALGL_VERSION="$(curl -fsSL "https://api.github.com/repos/Vir
 #     rm -f /tmp/start_kdeinit && \
 #     # KDE disable screen lock, double-click to open instead of single-click
 #     echo "[Daemon]\n\
-# Autolock=false\n\
-# LockOnResume=false" > /etc/xdg/kscreenlockerrc && \
+#     Autolock=false\n\
+#     LockOnResume=false" > /etc/xdg/kscreenlockerrc && \
 #     echo "[Compositing]\n\
-# Enabled=false" > /etc/xdg/kwinrc && \
+#     Enabled=false" > /etc/xdg/kwinrc && \
 #     echo "[KDE]\n\
-# SingleClick=false\n\
-# \n\
-# [KDE Action Restrictions]\n\
-# action/lock_screen=false\n\
-# logout=false\n\
-# \n\
-# [General]\n\
-# BrowserApplication=firefox.desktop" > /etc/xdg/kdeglobals
+#     SingleClick=false\n\
+#     \n\
+#     [KDE Action Restrictions]\n\
+#     action/lock_screen=false\n\
+#     logout=false\n\
+#     \n\
+#     [General]\n\
+#     BrowserApplication=firefox.desktop" > /etc/xdg/kdeglobals
 # # KDE environment variables
 # ENV DESKTOP_SESSION=plasma
 # ENV XDG_SESSION_DESKTOP=KDE
@@ -498,6 +502,40 @@ RUN cd /tmp && VIRTUALGL_VERSION="$(curl -fsSL "https://api.github.com/repos/Vir
 # ENV QT_IM_MODULE=fcitx
 # ENV XIM=fcitx
 # ENV XMODIFIERS="@im=fcitx"
+
+
+ENV USER=${USERNAME}
+WORKDIR /home/${USERNAME}
+RUN apt-get update && apt-get install -y zsh
+RUN git clone https://github.com/yihuai-gao/ubuntu-config.git && \
+    cd ubuntu-config && \
+    ./install_oh_my_zsh.sh && \
+    ./config_zsh.sh && \
+    ./install_conda.sh && \
+    ./install_user_apps.sh
+
+ENV SHELL=/bin/zsh
+ENV HOME=/home/${USERNAME}
+# Create conda environment
+RUN /home/${USERNAME}/miniforge3/bin/mamba create -n "mujoco-env" python=3.10.15 mujoco=3.2.6 pybind11-stubgen hydra-core black transforms3d matplotlib pybind11 spdlog zeromq \
+    cppzmq boost flask flask-socketio pynput opencv zarr line_profiler ray-core \
+    cmake make gxx_linux-64 spdlog cppzmq zeromq boost pybind11 -y
+
+RUN /home/${USERNAME}/miniforge3/envs/mujoco-env/bin/pip install mink dm_control
+
+SHELL ["/bin/zsh", "-c"]
+RUN git clone https://github.com/yihuai-gao/robot-message-queue.git && \
+    cd robot-message-queue && \
+    source /home/${USERNAME}/miniforge3/etc/profile.d/conda.sh && \
+    conda activate mujoco-env && \
+    pip install -e .
+
+RUN git clone https://github.com/yihuai-gao/teleop-utils.git && \
+    cd teleop-utils && \
+    /home/${USERNAME}/miniforge3/envs/mujoco-env/bin/pip install -e .
+
+# RUN /home/${USERNAME}/miniforge3/envs/mujoco-env/bin/conda install nvitop -y
+
 
 # # Wine, Winetricks, and launchers, this process must be consistent with https://wiki.winehq.org/Ubuntu
 # ARG WINE_BRANCH=staging
@@ -638,26 +676,5 @@ RUN cd /tmp && VIRTUALGL_VERSION="$(curl -fsSL "https://api.github.com/repos/Vir
 
 # # dbus-daemon to the below address is required during startup
 # ENV DBUS_SYSTEM_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR:-/tmp}/dbus-system-bus"
-
-
-ENV USER=${USERNAME}
-WORKDIR /home/${USERNAME}
-RUN apt-get update && apt-get install -y zsh
-RUN git clone https://github.com/yihuai-gao/ubuntu-config.git && \
-    cd ubuntu-config && \
-    ./install_oh_my_zsh.sh && \
-    ./config_zsh.sh && \
-    ./install_conda.sh && \
-    ./install_user_apps.sh
-
-ENV SHELL=/bin/zsh
-ENV HOME=/home/${USERNAME}
-WORKDIR /home/${USERNAME}
-
-# Create conda environment
-RUN /home/${USERNAME}/miniforge3/bin/mamba create -n "mujoco-env" python=3.10.15 mujoco=3.2.5 pybind11-stubgen hydra-core black transforms3d matplotlib pybind11 spdlog zeromq \
-    cppzmq boost flask flask-socketio pynput opencv zarr line_profiler ray-core \
-    cmake make gxx_linux-64 spdlog cppzmq zeromq boost pybind11 -y
-
 
 ENTRYPOINT ["/usr/bin/supervisord"]
